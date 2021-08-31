@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Padauk&display=swap" rel="stylesheet">
+    <title>Quotes generator</title>
+</head>
+
+<body>
+    <div class="container">
+        <div id="quote"><i class="fas fa-quote-left"></i><br><span id="quotes"></span></div>
+        <div id="auth">By&nbsp;&nbsp<span id="author"></span></div>
+        <button class="btn" id="newQut" onclick="getQuotes()">new Quotes</button>
+        <button class="btn" id="tweet" onclick="tweetMe()">tweet</button>
+    </div>
+    <script>
+        const quotes = document.getElementById('quotes');
+        const author = document.getElementById('author');
+        let realData = "";
+        let ran;
+        const getQuotes = async () => {
+            const api = "https://type.fit/api/quotes";
+            try {
+                let data = await fetch(api);
+                realData = await data.json();
+                let idx = Math.floor(Math.random() * 100);
+                ran = idx;
+                console.log(idx);
+                console.log(realData);
+                quotes.innerText = realData[idx].text;
+                if (realData[idx].author == null) {
+                    realData[idx].author = "unknown author";
+                }
+                author.innerText = realData[idx].author;
+            }
+            catch (err) {
+                console.log(err);
+            }
+        }
+        getQuotes();
+        const tweetMe = () => {
+            let tweetPost = `https://twitter.com/intent/tweet?text=${realData[ran].text}`;
+            window.open(tweetPost);
+        }
+
+    </script>
+</body>
+
+</html>
