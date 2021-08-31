@@ -34,10 +34,10 @@
             try {
                 let data = await fetch(api);
                 realData = await data.json();
-                let idx = Math.floor(Math.random() * 100);
+                let idx = Math.floor(Math.random() * 1642);
                 ran = idx;
-                console.log(idx);
-                console.log(realData);
+                //console.log(idx);
+                //console.log(realData);
                 quotes.innerText = realData[idx].text;
                 if (realData[idx].author == null) {
                     realData[idx].author = "unknown author";
